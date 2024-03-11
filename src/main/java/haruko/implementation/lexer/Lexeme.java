@@ -1,7 +1,7 @@
-package haruko.implementation.lexer
+package haruko.implementation.lexer;
 
-enum Lexeme {
-  case LEFT_PARENT,
+public enum Lexeme {
+  LEFT_PARENT,
   RIGHT_PARENT,
   LEFT_BRACKET,
   RIGHT_BRACKET,
@@ -33,5 +33,5 @@ enum Lexeme {
   PRLN,
   NIL,
   DEFN,
-  EOF
+  EOF;
 }
