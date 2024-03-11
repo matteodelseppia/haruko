@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment="">
+    <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment=".">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" afterDir="false" />
@@ -28,6 +42,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Token.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -141,9 +166,22 @@
       <option name="presentableId" value="Default" />
       <updated>1710165785470</updated>
     </task>
+    <task id="LOCAL-00001" summary=".">
+      <option name="closed" value="true" />
+      <created>1710179335112</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1710179335112</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
 </project>

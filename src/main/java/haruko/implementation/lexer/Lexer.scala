@@ -1,6 +1,6 @@
 package haruko.implementation.lexer
 
-import haruko.implementation.lexer.LexerExceptions.{InvalidNumberException, UnterminatedStringException}
+import haruko.implementation.lexer.LexerExceptions.{ForbiddenCharException, InvalidNumberException, UnterminatedStringException}
 
 import java.util.regex.Pattern
 import scala.collection.mutable.ArrayBuffer
@@ -23,11 +23,11 @@ class Lexer(val source: String) {
   private var token_start = 0
   private var token_current = 0
   private var current_line = 1
-  private var current_column = 1
+  private var current_column = 0
   private var current_char = source.charAt(0)
 
   def getTokens: ArrayBuffer[Token] = {
-    tokens
+    tokens.addOne(new Token(Lexeme.EOF, null, current_line, current_column))
   }
 
   private def nextChar(): Unit = {
@@ -41,7 +41,7 @@ class Lexer(val source: String) {
 
     if (current_char == '\n') {
       current_line += 1
-      current_column = 1
+      current_column = 0
     }
   }
 
@@ -94,7 +94,7 @@ class Lexer(val source: String) {
     private def isTerminalChar(c: Char): Boolean = {
       c match {
         case c if c.isLetterOrDigit => false
-        case '\'' | '*' | '+' | '-' | '>' | '<' | '!' => false
+        case '\'' | '*' | '+' | '-' | '>' | '<' | '!' | '^' | '/' => false
         case _ => true
       }
     }
@@ -115,6 +115,7 @@ class Lexer(val source: String) {
         case "sub" => Lexeme.SUB
         case "mul" => Lexeme.MUL
         case "div" => Lexeme.DIV
+        case s if s.charAt(0) == '^' => Lexeme.JVMCALL
         case _ => Lexeme.IDENT
       }
     }
@@ -127,9 +128,10 @@ class Lexer(val source: String) {
 
       lexeme match {
         case Lexeme.IDENT => tokens.addOne(new Token(lexeme, lex_string, current_line, current_column))
+        case Lexeme.JVMCALL => tokens.addOne(new Token(lexeme, lex_string.drop(1), current_line, current_column))
         case Lexeme.TRUE => tokens.addOne(new Token(lexeme, true, current_line, current_column))
         case Lexeme.FALSE => tokens.addOne(new Token(lexeme, false, current_line, current_column))
-        case _ => tokens.addOne(new Token(lexeme, current_line, current_column))
+        case _ => tokens.addOne(new Token(lexeme, null, current_line, current_column))
       }
     }
   }
@@ -142,6 +144,7 @@ class Lexer(val source: String) {
       case c if c.isWhitespace => nextChar()
       case c if c.isDigit => NumberReader.read()
       case c if c.isLetter => WordReader.read()
+      case '^' => WordReader.read()
       case '\"' => StringReader.read()
 
       case '+' =>
@@ -150,7 +153,7 @@ class Lexer(val source: String) {
           undoNext()
           NumberReader.read()
         } else {
-          tokens.addOne(new Token(Lexeme.ADD, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.ADD, null, current_line, current_column))
           nextChar()
         }
 
@@ -160,67 +163,69 @@ class Lexer(val source: String) {
           undoNext()
           NumberReader.read()
         } else {
-          tokens.addOne(new Token(Lexeme.SUB, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.SUB, null, current_line, current_column))
           nextChar()
         }
 
       case '*' =>
-        tokens.addOne(new Token(Lexeme.MUL, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.MUL, null, current_line, current_column))
         nextChar()
 
       case '/' =>
-        tokens.addOne(new Token(Lexeme.DIV, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.DIV, null, current_line, current_column))
         nextChar()
 
       case '!' =>
-        tokens.addOne(new Token(Lexeme.BANG, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.BANG, null, current_line, current_column))
         nextChar()
 
       case '=' =>
-        tokens.addOne(new Token(Lexeme.EQUAL, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.EQUAL, null, current_line, current_column))
         nextChar()
 
       case '(' =>
-        tokens.addOne(new Token(Lexeme.LEFT_PARENT, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.LEFT_PARENT, null, current_line, current_column))
         nextChar()
 
       case ')' =>
-        tokens.addOne(new Token(Lexeme.RIGHT_PARENT, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.RIGHT_PARENT, null, current_line, current_column))
         nextChar()
 
       case '[' =>
-        tokens.addOne(new Token(Lexeme.LEFT_BRACKET, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.LEFT_BRACKET, null, current_line, current_column))
         nextChar()
 
       case ']' =>
-        tokens.addOne(new Token(Lexeme.RIGHT_BRACKET, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.RIGHT_BRACKET, null, current_line, current_column))
         nextChar()
 
       case '{' =>
-        tokens.addOne(new Token(Lexeme.LEFT_BRACE, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.LEFT_BRACE, null, current_line, current_column))
         nextChar()
 
       case '}' =>
-        tokens.addOne(new Token(Lexeme.RIGHT_BRACE, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.RIGHT_BRACE, null, current_line, current_column))
         nextChar()
 
       case '<' =>
         nextChar()
         if (current_char == '=') {
-          tokens.addOne(new Token(Lexeme.LESS_EQUAL, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.LESS_EQUAL, null, current_line, current_column))
           nextChar()
         }
         else
-          tokens.addOne(new Token(Lexeme.LESS, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.LESS, null, current_line, current_column))
 
       case '>' =>
         nextChar()
         if (current_char == '=') {
-          tokens.addOne(new Token(Lexeme.GREATER_EQUAL, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.GREATER_EQUAL, null, current_line, current_column))
           nextChar()
         }
         else
-          tokens.addOne(new Token(Lexeme.GREATER, current_line, current_column))
+          tokens.addOne(new Token(Lexeme.GREATER, null, current_line, current_column))
+
+      case _ => throw ForbiddenCharException("Error: forbidden character in source")
     }
   }
 }
