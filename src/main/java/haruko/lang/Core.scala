@@ -45,14 +45,12 @@ object Core {
       throw new IllegalArgumentException("Expected boolean, found: " + o.toString)
   }
 
-  def prln(o: Object) : Object = {
+  def prln(o: Object) : Unit = {
     println(o)
-    null
   }
 
-  def prln$(objects: Array[Object]): Object = {
+  def prln$(objects: Array[Object]): Unit = {
     objects.foreach(prln)
-    null
   }
 
   def add$(objects: Array[Object]) : Object = {

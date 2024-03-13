@@ -36,12 +36,12 @@ object Methods {
 }
 
 class ASMWriter(val className: String, val compiler: Compiler) {
-  private val cw: ClassWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES)
+  private val cw: ClassWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS)
   private var mw: MethodVisitor = _
   private var fw: FieldVisitor = _
 
   def initClass(name: String) : Unit = {
-    cw.visit(Opcodes.V1_8, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
+    cw.visit(Opcodes.V1_5, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
   }
 
   def addField(name: String): Unit = {
@@ -58,8 +58,12 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitFieldInsn(Opcodes.GETSTATIC, className, field, Descriptors.L_OBJECT)
   }
   
+  def storeLocal(index: Int) : Unit = {
+    mw.visitVarInsn(Opcodes.ASTORE, index)
+  }
+
   def loadLocal(index: Int) : Unit = {
-    mw.visitIntInsn(Opcodes.ALOAD, index)
+    mw.visitVarInsn(Opcodes.ALOAD, index)
   }
 
   def push(obj: Object) : Unit = {
@@ -76,12 +80,17 @@ class ASMWriter(val className: String, val compiler: Compiler) {
   }
 
   def callMethod(method: Method, variadic: Boolean): Unit = {
-    val signature = {
+    var signature = {
       if (variadic)
-        "([" + Descriptors.L_OBJECT + ")" + Descriptors.L_OBJECT
+        "([" + Descriptors.L_OBJECT + ")"
       else
-        "(" + Descriptors.L_OBJECT*method.getParameterCount + ")" + Descriptors.L_OBJECT
+        "(" + Descriptors.L_OBJECT*method.getParameterCount + ")"
     }
+
+    if (method.getName.contains("prln"))
+      signature += "V"
+    else
+      signature += Descriptors.L_OBJECT
 
     mw.visitMethodInsn(Opcodes.INVOKESTATIC, "haruko/lang/Core", method.getName, signature, false)
   }
@@ -102,11 +111,11 @@ class ASMWriter(val className: String, val compiler: Compiler) {
   
   def endMethod() : Unit = {
     mw.visitInsn(Opcodes.ARETURN)
-    mw.visitMaxs(0,0)
+    mw.visitMaxs(0, 1)
     mw.visitEnd()
   }
 
-  def branch(ifTrue: Expression, ifFalse: Expression) : Unit = {
+  def branch(ifTrue: Expression, ifFalse: Expression, env: Environment) : Unit = {
     mw.visitTypeInsn(Opcodes.CHECKCAST, Descriptors.BOOLEAN)
     mw.visitMethodInsn(
       Opcodes.INVOKESTATIC,
@@ -119,10 +128,10 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     val skipFalse = new Label
     val skipTrue = new Label
     mw.visitJumpInsn(Opcodes.IF_ICMPEQ, skipFalse)
-    ifFalse.accept(compiler)
+    ifFalse.accept(compiler, env)
     mw.visitJumpInsn(Opcodes.GOTO, skipTrue)
     mw.visitLabel(skipFalse)
-    ifTrue.accept(compiler)
+    ifTrue.accept(compiler, env)
     mw.visitLabel(skipTrue)
   }
 
@@ -132,7 +141,11 @@ class ASMWriter(val className: String, val compiler: Compiler) {
   }
 
   def pushConst(obj: Object) : Unit = {
-    mw.visitLdcInsn(obj)
+    if (obj == null)
+      mw.visitInsn(Opcodes.ACONST_NULL)
+    else
+      mw.visitLdcInsn(obj)
+
     obj match {
       case o if o.isInstanceOf[Long] =>
         mw.visitMethodInsn(Opcodes.INVOKESTATIC, Descriptors.LONG, Methods.valueOf, Methods.valueOfLong, false)

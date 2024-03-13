@@ -10,8 +10,8 @@ public class DoExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitDo(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitDo(this, env);
     }
 
     @Override

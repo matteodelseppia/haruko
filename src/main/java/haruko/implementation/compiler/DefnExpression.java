@@ -15,10 +15,10 @@ public class DefnExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitDefn(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitDefn(this, env);
     }
-
+    
     @Override
     public String toString() {
         return "DefnExpression{" +

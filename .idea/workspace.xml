@@ -5,14 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/factorial.clj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/factorial.ha" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factorial.clj" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/JRuntime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/Runtime.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" afterDir="false" />
     </list>
@@ -33,6 +46,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/factorial.clj" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/Main.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" root0="FORCE_HIGHLIGHTING" />
@@ -48,6 +62,12 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Token.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <hideBySeverity>
+      <option value="200" />
+    </hideBySeverity>
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -69,14 +89,13 @@
     "Application.TestS.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/matteodelseppia/IdeaProjects/haruko",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "scala.compiler"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -98,6 +117,35 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
+    <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="bbPath" value="" />
+      <setting name="parameters" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <setting name="workingDir" value="" />
+      <setting name="focusEditor" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <option name="configVersion" value="1" />
+      <option name="options" />
+      <option name="profiles" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="host" value="" />
+      <setting name="port" value="0" />
+      <setting name="replType" value="SOCKET" />
+      <setting name="configType" value="SPECIFY" />
+      <setting name="replPortFileType" value="STANDARD" />
+      <setting name="customPortFile" value="" />
+      <setting name="fixLineNumbers" value="false" />
+      <setting name="focusEditor" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="Hello" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="haruko.Hello" />
       <module name="haruko" />
@@ -114,7 +162,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="haruko.Main" />
       <module name="haruko" />
-      <option name="PROGRAM_PARAMETERS" value="factorial.clj" />
+      <option name="PROGRAM_PARAMETERS" value="factorial.ha" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="haruko.lang.*" />
@@ -154,35 +202,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
-      <setting name="displayName" value="" />
-      <setting name="bbPath" value="" />
-      <setting name="parameters" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <setting name="workingDir" value="" />
-      <setting name="focusEditor" value="false" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
-      <option name="configVersion" value="1" />
-      <option name="options" />
-      <option name="profiles" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
-      <setting name="displayName" value="" />
-      <setting name="host" value="" />
-      <setting name="port" value="0" />
-      <setting name="replType" value="SOCKET" />
-      <setting name="configType" value="SPECIFY" />
-      <setting name="replPortFileType" value="STANDARD" />
-      <setting name="customPortFile" value="" />
-      <setting name="fixLineNumbers" value="false" />
-      <setting name="focusEditor" value="false" />
-      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.Hello" />
@@ -242,11 +261,20 @@
       <option name="project" value="LOCAL" />
       <updated>1710291052126</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary=".">
+      <option name="closed" value="true" />
+      <created>1710329260311</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710329260311</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.clj" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="." />

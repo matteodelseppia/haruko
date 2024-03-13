@@ -10,10 +10,10 @@ public class SymExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitSymbol(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitSymbol(this, env);
     }
-
+    
     @Override
     public String toString() {
         return "SymExpression{" +

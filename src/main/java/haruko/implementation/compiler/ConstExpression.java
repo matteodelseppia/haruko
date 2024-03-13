@@ -10,8 +10,8 @@ public class ConstExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitConst(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitConst(this, env);
     }
 
     @Override

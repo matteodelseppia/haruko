@@ -24,11 +24,10 @@ class Parser(val tokens: Iterator[Token]) {
       Lexeme.DEF -> parse_def,
       Lexeme.DEFN -> parse_defn,
       Lexeme.IF -> parse_if,
-      Lexeme.COND -> parse_cond,
-      //Lexeme.LET -> parse_let,
-      //Lexeme.DO -> parse_do,
-      Lexeme.IDENT -> parse_call)
-      //Lexeme.JVMCALL -> parse_call)
+      Lexeme.LET -> parse_let,
+      Lexeme.DO -> parse_do,
+      Lexeme.IDENT -> parse_call,
+      Lexeme.RIGHT_PARENT -> skip_form)
 
   nextToken()
   while (!matchLexeme(Lexeme.EOF)) {
@@ -56,6 +55,10 @@ class Parser(val tokens: Iterator[Token]) {
   private def consume(lex: Lexeme, e: Exception): Unit = {
     if (!matchLexeme(lex)) throw e
     nextToken()
+  }
+
+  private def skip_form() : Expression = {
+    new DoExpression(List.empty)
   }
 
   private def parse_expression(): Expression = {
@@ -104,23 +107,6 @@ class Parser(val tokens: Iterator[Token]) {
     ifExpr
   }
 
-  private def parse_cond(): CondExpression = {
-    nextToken()
-    var args: List[Expression] = List.empty
-    while (current_lexeme != Lexeme.RIGHT_PARENT) {
-      args = args :+ parse_expression()
-      nextToken()
-    }
-
-    if (args.length % 2 == 0)
-      throw ParserExceptions.MissingDefaultInCond("Missing default expression in cond ", current_token)
-
-    val condExpression = new CondExpression(args)
-    if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `cond` expression, found: ", current_token)
-    condExpression
-  }
-
   private def parse_call() : FnCallExpression = {
     val function = current_token
     nextToken()
@@ -142,6 +128,7 @@ class Parser(val tokens: Iterator[Token]) {
     consume(Lexeme.LEFT_PARENT, ParserExceptions.MissingArguments("Missing list of arguments at `defn`, found: ", current_token))
     var args: List[String] = List.empty
     while (current_lexeme != Lexeme.RIGHT_PARENT) {
+      println(current_lexeme)
       if (!matchLexeme(Lexeme.IDENT))
         throw new IllegalArgumentException("Unknown token in list of function arguments")
       args = args :+ current_token.value.asInstanceOf[String]
@@ -155,20 +142,33 @@ class Parser(val tokens: Iterator[Token]) {
     new DefnExpression(function, args, body)
   }
 
-/*
-  private def parse_let(): LetExpression = {
 
+  private def parse_let(): LetExpression = {
+    nextToken()
+    val identifier = current_token
+    consume(
+      Lexeme.IDENT,
+      ParserExceptions.MissingSymbolException("Expected identifier after `let`, found: ", identifier))
+    val assigned = parse_expression()
+    nextToken()
+    if (!matchLexeme(Lexeme.RIGHT_PARENT))
+      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `let` expression, found: ", current_token)
+
+    new LetExpression(identifier, assigned)
   }
 
   private def parse_do(): DoExpression = {
+    nextToken()
+    println(current_token)
+    var expressions: List[Expression] = List.empty
+    while (current_lexeme != Lexeme.RIGHT_PARENT) {
+      expressions = expressions :+ parse_expression()
+      nextToken()
+    }
 
+    if (!matchLexeme(Lexeme.RIGHT_PARENT))
+      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `do` expression, found: ", current_token)
+
+    new DoExpression(expressions)
   }
-
-  private def parse_call(): FnCallExpression = {
-
-  }
-
-*/
-
-
 }

@@ -22,6 +22,7 @@ public class Main {
                 String source = scanner.nextLine();
                 Lexer lex = new Lexer(source);
                 Parser parser = new Parser(lex.getTokens().iterator());
+                System.out.println(parser.getProgramBody());
                 Compiler compiler = new Compiler("Test" + i, parser.getProgramBody());
                 byte[] code = compiler.getCode();
                 HarukoClassLoader loader = new HarukoClassLoader();

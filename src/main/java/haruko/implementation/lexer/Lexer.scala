@@ -109,6 +109,7 @@ class Lexer(val source: String) {
         case "let" => Lexeme.LET
         case "if" => Lexeme.IF
         case "cond" => Lexeme.COND
+        case "do" => Lexeme.DO
         case _ => Lexeme.IDENT
       }
     }

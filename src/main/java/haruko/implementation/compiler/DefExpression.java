@@ -12,10 +12,10 @@ public class DefExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitDef(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitDef(this, env);
     }
-
+    
     @Override
     public String toString() {
         return "DefExpression{" +

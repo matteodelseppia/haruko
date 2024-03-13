@@ -12,8 +12,8 @@ public class IfExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitIf(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitIf(this, env);
     }
 
     @Override

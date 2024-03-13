@@ -1,13 +1,12 @@
 package haruko.implementation.compiler;
 
 public interface Visitor {
-    void visitFnCall(FnCallExpression e);
-    void visitDef(DefExpression e);
-    void visitLet(LetExpression e);
-    void visitDefn(DefnExpression e);
-    void visitIf(IfExpression e);
-    void visitDo(DoExpression e);
-    void visitCond(CondExpression e);
-    void visitConst(ConstExpression e);
-    void visitSymbol(SymExpression e);
+    void visitFnCall(FnCallExpression e, Environment env);
+    void visitDef(DefExpression e, Environment env);
+    void visitLet(LetExpression e, Environment env);
+    void visitDefn(DefnExpression e, Environment env);
+    void visitIf(IfExpression e, Environment env);
+    void visitDo(DoExpression e, Environment env);
+    void visitConst(ConstExpression e, Environment env);
+    void visitSymbol(SymExpression e, Environment env);
 }

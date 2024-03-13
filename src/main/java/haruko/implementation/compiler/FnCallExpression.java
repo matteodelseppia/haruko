@@ -13,8 +13,8 @@ public class FnCallExpression extends Expression {
     }
 
     @Override
-    void accept(Visitor visitor) {
-        visitor.visitFnCall(this);
+    void accept(Visitor visitor, Environment env) {
+        visitor.visitFnCall(this, env);
     }
 
     @Override
