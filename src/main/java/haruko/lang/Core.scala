@@ -53,8 +53,25 @@ object Core {
     objects.foreach(prln)
   }
 
+  def cat(a: Object, b: Object): Object = {
+    a.toString + b.toString
+  }
+
+  def cat$(objects: Array[Object]) : Object = {
+    objects.reduce((a, b) => a.toString + b)
+  }
+
+  def pr(o: Object) : Unit = {
+    print(o)
+    System.out.flush()
+  }
+
+  def pr$(objects: Array[Object]) : Unit = {
+    objects.foreach(pr)
+    System.out.flush()
+  }
+
   def add$(objects: Array[Object]) : Object = {
-    runtimeMathCheck(objects.toSeq)
 
     var result: Number = 0L.asInstanceOf[Number]
     objects.foreach(x => {
@@ -65,7 +82,6 @@ object Core {
   }
 
   def add(a: Object, b: Object) : Object = {
-    runtimeMathCheck(List(a,b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '+')
   }
 
@@ -78,8 +94,6 @@ object Core {
   }
 
   def mul$(objects: Array[Object]): Object = {
-    runtimeMathCheck(objects.toSeq)
-
     var result: Number = 1L.asInstanceOf[Number]
     objects.foreach(x => {
       result = binaryMathOp(result, x.asInstanceOf[Number], '*').asInstanceOf[Number]
@@ -89,13 +103,10 @@ object Core {
   }
 
   def mul(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '*')
   }
 
   def sub$(objects: Array[Object]): Object = {
-    runtimeMathCheck(objects.toSeq)
-
     var result: Number = objects(0).asInstanceOf[Number]
     objects.tail.foreach(x => {
       result = binaryMathOp(result, x.asInstanceOf[Number], '-').asInstanceOf[Number]
@@ -105,13 +116,10 @@ object Core {
   }
 
   def sub(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '-')
   }
 
   def div$(objects: Array[Object]): Object = {
-    runtimeMathCheck(objects.toSeq)
-
     var result: Number = objects(0).asInstanceOf[Number]
     objects.tail.foreach(x => {
       result = binaryMathOp(result, x.asInstanceOf[Number], '/').asInstanceOf[Number]
@@ -121,27 +129,22 @@ object Core {
   }
 
   def div(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '/')
   }
 
   def gt(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '>')
   }
 
   def lt(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '<')
   }
 
   def geq(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '^')
   }
 
   def leq(a: Object, b: Object): Object = {
-    runtimeMathCheck(List(a, b))
     binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], '?')
   }
 
@@ -189,5 +192,15 @@ object Core {
   
   def neq(a: Object, b: Object): Object = {
     Boolean.box(!a.equals(b))
+  }
+
+  def mod(a: Object, b: Object) : Object = {
+    if (b.equals(0))
+      throw new IllegalArgumentException("Division by zero")
+    (a, b) match {
+      case (x, y) if x.isInstanceOf[Long] && y.isInstanceOf[Long] =>
+        (x.asInstanceOf[Long] % y.asInstanceOf[Long]).asInstanceOf[Object]
+      case _ => throw new IllegalArgumentException("Mod on non integers")
+    }
   }
 }

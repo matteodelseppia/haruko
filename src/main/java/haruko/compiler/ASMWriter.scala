@@ -86,10 +86,10 @@ class ASMWriter(val className: String, val compiler: Compiler) {
         "(" + Descriptors.L_OBJECT*method.getParameterCount + ")"
     }
 
-    if (method.getName.contains("prln"))
-      signature += "V"
-    else
-      signature += Descriptors.L_OBJECT
+    method.getName match {
+      case "prln" | "pr" | "pr$" | "prln$" => signature += "V"
+      case _ => signature += Descriptors.L_OBJECT
+    }
 
     mw.visitMethodInsn(Opcodes.INVOKESTATIC, "haruko/lang/Core", method.getName, signature, false)
   }

@@ -125,7 +125,6 @@ class Parser(val tokens: Iterator[Token]) {
     consume(Lexeme.LEFT_PARENT, ParserExceptions.MissingArguments("Missing list of arguments at `defn`, found: ", current_token))
     var args: List[String] = List.empty
     while (current_lexeme != Lexeme.RIGHT_PARENT) {
-      println(current_lexeme)
       if (!matchLexeme(Lexeme.IDENT))
         throw new IllegalArgumentException("Unknown token in list of function arguments")
       args = args :+ current_token.value.asInstanceOf[String]
@@ -156,7 +155,6 @@ class Parser(val tokens: Iterator[Token]) {
 
   private def parse_do(): DoExpression = {
     nextToken()
-    println(current_token)
     var expressions: List[Expression] = List.empty
     while (current_lexeme != Lexeme.RIGHT_PARENT) {
       expressions = expressions :+ parse_expression()
