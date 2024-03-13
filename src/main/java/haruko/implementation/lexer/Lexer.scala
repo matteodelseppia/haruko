@@ -94,7 +94,7 @@ class Lexer(val source: String) {
     private def isTerminalChar(c: Char): Boolean = {
       c match {
         case c if c.isLetterOrDigit => false
-        case '\'' | '*' | '+' | '-' | '>' | '<' | '!' | '^' | '/' => false
+        case '\'' | '*' | '+' | '-' | '>' | '<' | '!' | '^' | '/' | '=' | '$' => false
         case _ => true
       }
     }
@@ -104,18 +104,11 @@ class Lexer(val source: String) {
         case "def" => Lexeme.DEF
         case "defn" => Lexeme.DEFN
         case "nil" => Lexeme.NIL
-        case "and" => Lexeme.AND
-        case "or" => Lexeme.OR
-        case "not" => Lexeme.NOT
-        case "not=" => Lexeme.NOT_EQUAL
-        case "prln" => Lexeme.PRLN
         case "true" => Lexeme.TRUE
         case "false" => Lexeme.FALSE
-        case "add" => Lexeme.ADD
-        case "sub" => Lexeme.SUB
-        case "mul" => Lexeme.MUL
-        case "div" => Lexeme.DIV
-        case s if s.charAt(0) == '^' => Lexeme.JVMCALL
+        case "let" => Lexeme.LET
+        case "if" => Lexeme.IF
+        case "cond" => Lexeme.COND
         case _ => Lexeme.IDENT
       }
     }
@@ -128,7 +121,6 @@ class Lexer(val source: String) {
 
       lexeme match {
         case Lexeme.IDENT => tokens.addOne(new Token(lexeme, lex_string, current_line, current_column))
-        case Lexeme.JVMCALL => tokens.addOne(new Token(lexeme, lex_string.drop(1), current_line, current_column))
         case Lexeme.TRUE => tokens.addOne(new Token(lexeme, true, current_line, current_column))
         case Lexeme.FALSE => tokens.addOne(new Token(lexeme, false, current_line, current_column))
         case _ => tokens.addOne(new Token(lexeme, null, current_line, current_column))
@@ -143,7 +135,6 @@ class Lexer(val source: String) {
     current_char match {
       case c if c.isWhitespace => nextChar()
       case c if c.isDigit => NumberReader.read()
-      case c if c.isLetter => WordReader.read()
       case '^' => WordReader.read()
       case '\"' => StringReader.read()
 
@@ -153,35 +144,18 @@ class Lexer(val source: String) {
           undoNext()
           NumberReader.read()
         } else {
-          tokens.addOne(new Token(Lexeme.ADD, null, current_line, current_column))
-          nextChar()
+          undoNext()
+          WordReader.read()
         }
-
       case '-' =>
         nextChar()
         if (current_char.isDigit) {
           undoNext()
           NumberReader.read()
         } else {
-          tokens.addOne(new Token(Lexeme.SUB, null, current_line, current_column))
-          nextChar()
+          undoNext()
+          WordReader.read()
         }
-
-      case '*' =>
-        tokens.addOne(new Token(Lexeme.MUL, null, current_line, current_column))
-        nextChar()
-
-      case '/' =>
-        tokens.addOne(new Token(Lexeme.DIV, null, current_line, current_column))
-        nextChar()
-
-      case '!' =>
-        tokens.addOne(new Token(Lexeme.BANG, null, current_line, current_column))
-        nextChar()
-
-      case '=' =>
-        tokens.addOne(new Token(Lexeme.EQUAL, null, current_line, current_column))
-        nextChar()
 
       case '(' =>
         tokens.addOne(new Token(Lexeme.LEFT_PARENT, null, current_line, current_column))
@@ -207,25 +181,7 @@ class Lexer(val source: String) {
         tokens.addOne(new Token(Lexeme.RIGHT_BRACE, null, current_line, current_column))
         nextChar()
 
-      case '<' =>
-        nextChar()
-        if (current_char == '=') {
-          tokens.addOne(new Token(Lexeme.LESS_EQUAL, null, current_line, current_column))
-          nextChar()
-        }
-        else
-          tokens.addOne(new Token(Lexeme.LESS, null, current_line, current_column))
-
-      case '>' =>
-        nextChar()
-        if (current_char == '=') {
-          tokens.addOne(new Token(Lexeme.GREATER_EQUAL, null, current_line, current_column))
-          nextChar()
-        }
-        else
-          tokens.addOne(new Token(Lexeme.GREATER, null, current_line, current_column))
-
-      case _ => throw ForbiddenCharException("Error: forbidden character in source")
+      case _ => WordReader.read()
     }
   }
 }

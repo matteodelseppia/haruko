@@ -10,7 +10,14 @@ public class DoExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitDo(this);
+    }
+
+    @Override
+    public String toString() {
+        return "DoExpression{" +
+                "expressions=" + expressions +
+                '}';
     }
 }

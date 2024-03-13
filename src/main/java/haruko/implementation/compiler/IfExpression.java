@@ -12,7 +12,16 @@ public class IfExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitIf(this);
+    }
+
+    @Override
+    public String toString() {
+        return "IfExpression{" +
+                "condition=" + condition +
+                ", ifTrue=" + ifTrue +
+                ", ifFalse=" + ifFalse +
+                '}';
     }
 }

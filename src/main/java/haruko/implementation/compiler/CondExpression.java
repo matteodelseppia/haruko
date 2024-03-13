@@ -10,7 +10,14 @@ public class CondExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitCond(this);
+    }
+
+    @Override
+    public String toString() {
+        return "CondExpression{" +
+                "tests=" + tests +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package haruko.implementation.compiler;
 
-public interface Visitor<T> {
+public interface Visitor {
     void visitFnCall(FnCallExpression e);
     void visitDef(DefExpression e);
     void visitLet(LetExpression e);

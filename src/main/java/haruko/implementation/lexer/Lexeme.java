@@ -13,7 +13,6 @@ public enum Lexeme {
   ADD,
   SUB,
   MUL,
-  JVMCALL,
   DIV,
   GREATER,
   GREATER_EQUAL,

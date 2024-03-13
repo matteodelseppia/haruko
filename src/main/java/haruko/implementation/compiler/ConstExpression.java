@@ -10,7 +10,14 @@ public class ConstExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitConst(this);
+    }
+
+    @Override
+    public String toString() {
+        return "ConstExpression{" +
+                "constant=" + constant +
+                '}';
     }
 }

@@ -5,25 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/JRuntime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Token.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/Main.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" root0="FORCE_HIGHLIGHTING" />
@@ -52,6 +57,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Test.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Token.java" root0="FORCE_HIGHLIGHTING" />
@@ -59,9 +65,9 @@
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2dXsW4boUIT9egFpT8IlFX9kp1v" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -72,17 +78,34 @@
   "keyToString": {
     "Application.Hello.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.Test.executor": "Run",
+    "Application.TestS.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/matteodelseppia/IdeaProjects/haruko/src/main/java/haruko",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "scala.compiler"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/haruko" />
+      <recent name="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer" />
+      <recent name="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler" />
+      <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/lexer" />
+      <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/compiler" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/compiler" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="haruko.implementation.compiler" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
@@ -93,7 +116,7 @@
       <module name="haruko" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="haruko.*" />
+          <option name="PATTERN" value="haruko.lang.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -106,7 +129,37 @@
       <module name="haruko" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="haruko.*" />
+          <option name="PATTERN" value="haruko.lang.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="haruko.implementation.compiler.Test" />
+      <module name="haruko" />
+      <option name="PROGRAM_PARAMETERS" value="Test.class" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="haruko.implementation.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestS" type="Application" factoryName="Application" temporary="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="graalvm-jdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="haruko.implementation.compiler.TestS" />
+      <module name="haruko" />
+      <option name="PROGRAM_PARAMETERS" value="TestS.class" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="haruko.implementation.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -126,6 +179,9 @@
       </method>
     </configuration>
     <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <option name="configVersion" value="1" />
+      <option name="options" />
+      <option name="profiles" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
@@ -140,9 +196,17 @@
       <setting name="focusEditor" value="false" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Hello" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.TestS" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.TestS" />
         <item itemvalue="Application.Hello" />
       </list>
     </recent_temporary>
@@ -174,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710179335112</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary=".">
+      <option name="closed" value="true" />
+      <created>1710197209415</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710197209415</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="UnknownFeatures">

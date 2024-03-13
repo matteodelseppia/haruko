@@ -1,21 +1,27 @@
 package haruko.implementation.compiler;
 
-import haruko.implementation.lexer.Lexeme;
+import haruko.implementation.lexer.Token;
 import scala.collection.immutable.List;
 
 public class FnCallExpression extends Expression {
-    final Lexeme type;
-    final String functionName;
+    final Token functionName;
     final List<Expression> arguments;
 
-    public FnCallExpression(Lexeme type, String functionName, List<Expression> arguments) {
-        this.type = type;
+    public FnCallExpression(Token functionName, List<Expression> arguments) {
         this.functionName = functionName;
         this.arguments = arguments;
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitFnCall(this);
+    }
+
+    @Override
+    public String toString() {
+        return "FnCallExpression{" +
+                "functionName=" + functionName +
+                ", arguments=" + arguments +
+                '}';
     }
 }

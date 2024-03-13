@@ -3,8 +3,8 @@ package haruko.implementation.compiler;
 import haruko.implementation.lexer.Token;
 
 public class DefExpression extends Expression {
-    final Token variableName;
-    final Expression assignedValue;
+    public final Token variableName;
+    public final Expression assignedValue;
 
     public DefExpression(Token variable, Expression assignedValue) {
         this.variableName = variable;
@@ -12,7 +12,15 @@ public class DefExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitDef(this);
+    }
+
+    @Override
+    public String toString() {
+        return "DefExpression{" +
+                "variableName=" + variableName +
+                ", assignedValue=" + assignedValue +
+                '}';
     }
 }

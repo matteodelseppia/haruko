@@ -14,7 +14,7 @@ public class DefnExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitDefn(this);
     }
 }

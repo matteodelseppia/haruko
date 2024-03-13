@@ -10,7 +10,14 @@ public class SymExpression extends Expression {
     }
 
     @Override
-    <R> void accept(Visitor<R> visitor) {
+    void accept(Visitor visitor) {
         visitor.visitSymbol(this);
+    }
+
+    @Override
+    public String toString() {
+        return "SymExpression{" +
+                "symbol=" + symbol +
+                '}';
     }
 }
