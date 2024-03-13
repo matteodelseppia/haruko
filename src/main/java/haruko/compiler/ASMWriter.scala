@@ -1,6 +1,5 @@
-package haruko.implementation.compiler
+package haruko.compiler
 
-import haruko.implementation.lexer.Lexeme
 import org.objectweb.asm
 import org.objectweb.asm.{ClassWriter, FieldVisitor, Label, MethodVisitor, Opcodes}
 
@@ -119,7 +118,7 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitTypeInsn(Opcodes.CHECKCAST, Descriptors.BOOLEAN)
     mw.visitMethodInsn(
       Opcodes.INVOKESTATIC,
-      "haruko/implementation/Runtime",
+      "haruko/Runtime",
       "unboxBoolean",
       "(" + Descriptors.L_BOOLEAN + ")" + "B",
       false)

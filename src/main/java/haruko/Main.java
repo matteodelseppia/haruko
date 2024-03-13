@@ -1,8 +1,8 @@
 package haruko;
 
-import haruko.implementation.compiler.Compiler;
-import haruko.implementation.compiler.Parser;
-import haruko.implementation.lexer.Lexer;
+import haruko.compiler.Compiler;
+import haruko.compiler.Parser;
+import haruko.compiler.Lexer;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

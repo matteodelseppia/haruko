@@ -1,4 +1,4 @@
-package haruko.implementation.compiler;
+package haruko.compiler;
 
 import scala.collection.immutable.List;
 

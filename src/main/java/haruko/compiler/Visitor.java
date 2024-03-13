@@ -1,4 +1,4 @@
-package haruko.implementation.compiler;
+package haruko.compiler;
 
 public interface Visitor {
     void visitFnCall(FnCallExpression e, Environment env);

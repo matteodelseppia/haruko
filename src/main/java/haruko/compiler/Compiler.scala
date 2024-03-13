@@ -1,6 +1,6 @@
-package haruko.implementation.compiler
+package haruko.compiler
 
-import haruko.implementation.compiler.CompilerExceptions.{AlreadyDefinedLocalVariable, AlreadyDefinedMethod, UnboundVariable}
+import CompilerExceptions.{AlreadyDefinedLocalVariable, AlreadyDefinedMethod, UnboundVariable}
 import haruko.lang.Core
 
 import java.util.logging.Logger

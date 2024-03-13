@@ -1,6 +1,5 @@
-package haruko.implementation.compiler;
+package haruko.compiler;
 
-import haruko.implementation.lexer.Token;
 import scala.collection.immutable.List;
 
 public class DefnExpression extends Expression {

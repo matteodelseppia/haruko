@@ -1,4 +1,4 @@
-package haruko.implementation.compiler;
+package haruko.compiler;
 
 public class IfExpression extends Expression {
     final Expression condition;

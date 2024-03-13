@@ -1,6 +1,4 @@
-package haruko.implementation.compiler;
-
-import haruko.implementation.lexer.Token;
+package haruko.compiler;
 
 public class DefExpression extends Expression {
     public final Token variableName;

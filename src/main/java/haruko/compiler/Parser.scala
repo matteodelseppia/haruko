@@ -1,7 +1,4 @@
-package haruko.implementation.compiler
-
-import haruko.implementation.lexer.Lexeme
-import haruko.implementation.lexer.Token
+package haruko.compiler
 
 
 object ParserExceptions {

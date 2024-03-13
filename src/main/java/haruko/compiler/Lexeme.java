@@ -1,4 +1,4 @@
-package haruko.implementation.lexer;
+package haruko.compiler;
 
 public enum Lexeme {
   LEFT_PARENT,

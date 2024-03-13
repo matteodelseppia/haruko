@@ -1,20 +1,67 @@
-package haruko.implementation.lexer
-
-import haruko.implementation.lexer.LexerExceptions.{ForbiddenCharException, InvalidNumberException, UnterminatedStringException}
+package haruko.compiler
 
 import java.util.regex.Pattern
 import scala.collection.mutable.ArrayBuffer
 
-object LexerExceptions {
-  case class UnterminatedStringException(msg: String) extends Exception(msg)
-  case class ForbiddenCharException(msg: String) extends Exception(msg)
-  case class EmptySourceException(msg: String) extends Exception(msg)
-  case class InvalidNumberException(msg: String) extends NumberFormatException(msg)
-}
+/**
+ * Tokens are pairs of a {@link Lexeme} and possibly an {@link Object}, encountered
+ * while scanning the source code. They are the output of the {@link Lexer}. They
+ * also hold information about the line and column where they were encountered.
+ * @param lexeme the Lexeme associated to the Token.
+ * @param value the Object associated to the Token (if any).
+ * @param line the source line where the Token was encountered.
+ * @param column the source column where the Token was encountered.
+ */
+case class Token(lexeme: Lexeme, value: Object, line: Int, column: Int)
 
+
+/**
+ * The generic exception thrown when the {@link Lexer} encounters a syntactical
+ * error in the source code.
+ * @param msg The message to show to the user.
+ */
+private abstract class LexerException(msg: String) extends Exception(msg)
+
+
+/**
+ * Exception thrown when the end of file is reached before a string terminating ' " '
+ * character is encountered.
+ * @param msg The message to show to the user.
+ */
+private case class UnterminatedStringException(msg: String) extends LexerException(msg)
+
+
+/**
+ * Exception thrown when a forbidden character is encountered while scanning the source.
+ * @param msg The message to show to the user.
+ */
+private case class ForbiddenCharException(msg: String) extends LexerException(msg)
+
+
+/**
+ * Exception thrown when the source file is found empty.
+ * @param msg The message to show to the user.
+ */
+private case class EmptySourceException(msg: String) extends LexerException(msg)
+
+
+/**
+ * Exception thrown when an invalid numeric {@link Token} is encountered while
+ * scanning the source.
+ * @param msg The message to show to the user.
+ */
+private case class InvalidNumberException(msg: String) extends LexerException(msg)
+
+
+/**
+ * The Lexer scans the source one character at a time, producing
+ * an {@link ArrayBuffer} of {@link Token} that will serve as input for
+ * the {@link Parser}.
+ * @param source a {@link String} containing the program source.
+ */
 class Lexer(val source: String) {
 
-  if (source.isEmpty) throw LexerExceptions.EmptySourceException("Error: source is empty")
+  if (source.isEmpty) throw EmptySourceException("Error: source is empty")
 
   private val tokens = new ArrayBuffer[Token]
   private val integer_pattern = Pattern.compile("[+-]?(?!0\\d)\\d+$")
@@ -66,10 +113,10 @@ class Lexer(val source: String) {
       val number_string = source.substring(token_start, token_current)
 
       if (integer_pattern.matcher(number_string).matches())
-        tokens.addOne(new Token(Lexeme.CONST_L, number_string.toLong, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.CONST_L, number_string.toLong.asInstanceOf[Object], current_line, current_column))
 
       else if (double_pattern.matcher(number_string).matches())
-        tokens.addOne(new Token(Lexeme.CONST_D, number_string.toDouble, current_line, current_column))
+        tokens.addOne(new Token(Lexeme.CONST_D, number_string.toDouble.asInstanceOf[Object], current_line, current_column))
 
       else
         throw InvalidNumberException("Error: invalid number")
@@ -122,8 +169,8 @@ class Lexer(val source: String) {
 
       lexeme match {
         case Lexeme.IDENT => tokens.addOne(new Token(lexeme, lex_string, current_line, current_column))
-        case Lexeme.TRUE => tokens.addOne(new Token(lexeme, true, current_line, current_column))
-        case Lexeme.FALSE => tokens.addOne(new Token(lexeme, false, current_line, current_column))
+        case Lexeme.TRUE => tokens.addOne(new Token(lexeme, true.asInstanceOf[Object], current_line, current_column))
+        case Lexeme.FALSE => tokens.addOne(new Token(lexeme, false.asInstanceOf[Object], current_line, current_column))
         case _ => tokens.addOne(new Token(lexeme, null, current_line, current_column))
       }
     }

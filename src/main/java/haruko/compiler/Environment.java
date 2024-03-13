@@ -1,4 +1,4 @@
-package haruko.implementation.compiler;
+package haruko.compiler;
 
 public class Environment {
     public int max_local_id;
