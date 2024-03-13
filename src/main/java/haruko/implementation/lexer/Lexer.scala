@@ -147,6 +147,7 @@ class Lexer(val source: String) {
           undoNext()
           WordReader.read()
         }
+        
       case '-' =>
         nextChar()
         if (current_char.isDigit) {

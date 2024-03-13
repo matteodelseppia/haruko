@@ -1,5 +1,7 @@
 package haruko.lang
 
+import org.graalvm.collections.Pair
+
 import scala.annotation.tailrec
 
 object Core {
@@ -181,5 +183,13 @@ object Core {
   def not(o: Object) : Object = {
     verifyIfBool(o)
     Boolean.box(!o.asInstanceOf[Boolean])
+  }
+  
+  def eq(a: Object, b: Object): Object = {
+    Boolean.box(a.equals(b))
+  }
+  
+  def neq(a: Object, b: Object): Object = {
+    Boolean.box(!a.equals(b))
   }
 }

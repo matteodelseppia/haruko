@@ -41,7 +41,7 @@ class ASMWriter(val className: String, val compiler: Compiler) {
   private var fw: FieldVisitor = _
 
   def initClass(name: String) : Unit = {
-    cw.visit(Opcodes.V14, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
+    cw.visit(Opcodes.V1_8, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
   }
 
   def addField(name: String): Unit = {
@@ -52,6 +52,14 @@ class ASMWriter(val className: String, val compiler: Compiler) {
 
   def putStatic(field: String) : Unit = {
     mw.visitFieldInsn(Opcodes.PUTSTATIC, className, field, Descriptors.L_OBJECT)
+  }
+
+  def loadStatic(field: String): Unit = {
+    mw.visitFieldInsn(Opcodes.GETSTATIC, className, field, Descriptors.L_OBJECT)
+  }
+  
+  def loadLocal(index: Int) : Unit = {
+    mw.visitIntInsn(Opcodes.ALOAD, index)
   }
 
   def push(obj: Object) : Unit = {
@@ -78,11 +86,31 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitMethodInsn(Opcodes.INVOKESTATIC, "haruko/lang/Core", method.getName, signature, false)
   }
 
+  def callLocalMethod(method: String, num_args: Int): Unit = {
+    val signature = "(" + Descriptors.L_OBJECT * num_args + ")" + Descriptors.L_OBJECT
+    mw.visitMethodInsn(Opcodes.INVOKESTATIC, className, method, signature, false)
+  }
+  
+  def beginMethod(name: String, num_args: Int): Unit = {
+    mw = cw.visitMethod(
+      Access.PRIVATE_STATIC, 
+      name,
+      "(" + Descriptors.L_OBJECT*num_args + ")" + Descriptors.L_OBJECT, 
+      null, 
+      null)
+  }
+  
+  def endMethod() : Unit = {
+    mw.visitInsn(Opcodes.ARETURN)
+    mw.visitMaxs(0,0)
+    mw.visitEnd()
+  }
+
   def branch(ifTrue: Expression, ifFalse: Expression) : Unit = {
     mw.visitTypeInsn(Opcodes.CHECKCAST, Descriptors.BOOLEAN)
     mw.visitMethodInsn(
       Opcodes.INVOKESTATIC,
-      "haruko/implementation/JRuntime",
+      "haruko/implementation/Runtime",
       "unboxBoolean",
       "(" + Descriptors.L_BOOLEAN + ")" + "B",
       false)

@@ -9,6 +9,8 @@ object ParserExceptions {
   case class MissingRightParent(msg: String, info: Token) extends Exception(msg)
   case class MissingDefaultInCond(msg: String, info: Token) extends Exception(msg)
   case class MissingEOF(msg: String, info: Token) extends Exception(msg)
+  case class MissingArguments(msg: String, info: Token) extends Exception(msg)
+  case class MissingFnName(msg: String, info: Token) extends Exception(msg)
 }
 
 
@@ -20,7 +22,7 @@ class Parser(val tokens: Iterator[Token]) {
   private val lexeme_function_map: Map[Lexeme, () => Expression] =
     Map(
       Lexeme.DEF -> parse_def,
-      //Lexeme.DEFN -> parse_defn,
+      Lexeme.DEFN -> parse_defn,
       Lexeme.IF -> parse_if,
       Lexeme.COND -> parse_cond,
       //Lexeme.LET -> parse_let,
@@ -37,11 +39,11 @@ class Parser(val tokens: Iterator[Token]) {
   def getProgramBody: List[Expression] = {
     program_body
   }
-  
+
   def getTest: () => Expression = {
     parse_if
   }
-  
+
   private def nextToken(): Unit = {
     current_token = tokens.next()
     current_lexeme = current_token.lexeme
@@ -70,7 +72,7 @@ class Parser(val tokens: Iterator[Token]) {
            Lexeme.FALSE |
            Lexeme.NIL => new ConstExpression(current_token)
 
-      case _ => new SymExpression(current_token)
+      case Lexeme.IDENT => new SymExpression(current_token)
     }
   }
 
@@ -95,6 +97,7 @@ class Parser(val tokens: Iterator[Token]) {
     val ifTrue = parse_expression()
     nextToken()
     val ifFalse = parse_expression()
+    nextToken()
     val ifExpr = new IfExpression(branchingExpr, ifTrue, ifFalse)
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
       throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `if` expression, found: ", current_token)
@@ -132,6 +135,26 @@ class Parser(val tokens: Iterator[Token]) {
     new FnCallExpression(function, args)
   }
 
+  private def parse_defn(): DefnExpression = {
+    nextToken()
+    val function = current_token
+    consume(Lexeme.IDENT, ParserExceptions.MissingFnName("Missing function name after `def`, found: ", current_token))
+    consume(Lexeme.LEFT_PARENT, ParserExceptions.MissingArguments("Missing list of arguments at `defn`, found: ", current_token))
+    var args: List[String] = List.empty
+    while (current_lexeme != Lexeme.RIGHT_PARENT) {
+      if (!matchLexeme(Lexeme.IDENT))
+        throw new IllegalArgumentException("Unknown token in list of function arguments")
+      args = args :+ current_token.value.asInstanceOf[String]
+      nextToken()
+    }
+    nextToken()
+    val body = parse_expression()
+    nextToken()
+    if (!matchLexeme(Lexeme.RIGHT_PARENT))
+      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `defn` expression, found: ", current_token)
+    new DefnExpression(function, args, body)
+  }
+
 /*
   private def parse_let(): LetExpression = {
 
@@ -145,10 +168,7 @@ class Parser(val tokens: Iterator[Token]) {
 
   }
 
+*/
 
-  private def parse_defn(): DefnExpression = {
 
-  }
-
- */
 }

@@ -1,13 +1,14 @@
 package haruko.implementation.compiler;
 
+import haruko.implementation.lexer.Token;
 import scala.collection.immutable.List;
 
 public class DefnExpression extends Expression {
-    final String functionName;
+    final Token functionName;
     final List<String> arguments;
-    final List<Expression> body;
+    final Expression body;
 
-    public DefnExpression(String functionName, List<String> arguments, List<Expression> body) {
+    public DefnExpression(Token functionName, List<String> arguments, Expression body) {
         this.functionName = functionName;
         this.arguments = arguments;
         this.body = body;
@@ -16,5 +17,14 @@ public class DefnExpression extends Expression {
     @Override
     void accept(Visitor visitor) {
         visitor.visitDefn(this);
+    }
+
+    @Override
+    public String toString() {
+        return "DefnExpression{" +
+                "functionName=" + functionName +
+                ", arguments=" + arguments +
+                ", body=" + body +
+                '}';
     }
 }

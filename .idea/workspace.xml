@@ -5,29 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/JRuntime.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/factorial.clj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/CondExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ConstExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefExpression.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/JRuntime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/Runtime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/ASMWriter.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Compiler.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DefnExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/DoExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Expression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/FnCallExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/IfExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/LetExpression.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Parser.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/SymExpression.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler/Visitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexeme.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer/Lexer.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +72,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/matteodelseppia/IdeaProjects/haruko/src/main/java/haruko",
+    "last_opened_file_path": "/Users/matteodelseppia/IdeaProjects/haruko",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -94,11 +81,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/java/haruko" />
       <recent name="$PROJECT_DIR$/src/main/java/haruko/implementation/lexer" />
       <recent name="$PROJECT_DIR$/src/main/java/haruko/implementation/compiler" />
       <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/lexer" />
-      <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/compiler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/scala/haruko/implementation/compiler" />
@@ -127,6 +114,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="haruko.Main" />
       <module name="haruko" />
+      <option name="PROGRAM_PARAMETERS" value="factorial.clj" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="haruko.lang.*" />
@@ -246,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710197209415</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=".">
+      <option name="closed" value="true" />
+      <created>1710291052126</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710291052126</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="UnknownFeatures">
