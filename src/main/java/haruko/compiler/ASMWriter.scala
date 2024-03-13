@@ -85,7 +85,7 @@ class ASMWriter(val className: String, val compiler: Compiler) {
       else
         "(" + Descriptors.L_OBJECT*method.getParameterCount + ")"
     }
-
+    
     method.getName match {
       case "prln" | "pr" | "pr$" | "prln$" => signature += "V"
       case _ => signature += Descriptors.L_OBJECT

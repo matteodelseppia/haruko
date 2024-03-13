@@ -311,6 +311,9 @@ class Lexer(val source: String) {
         if (currentChar.isDigit) {
           undoNext()
           NumberReader.read()
+        } else if (currentChar == '>') {
+          tokens.addOne(Token(Lexeme.COMPOSE, null, currentLine, currentColumn))
+          nextChar()
         } else {
           undoNext()
           WordReader.read()
@@ -338,6 +341,10 @@ class Lexer(val source: String) {
 
       case '}' =>
         tokens.addOne(Token(Lexeme.RIGHT_BRACE, null, currentLine, currentColumn))
+        nextChar()
+
+      case '_' =>
+        tokens.addOne(Token(Lexeme.SKIP, null, currentLine, currentColumn))
         nextChar()
 
       case _ => WordReader.read()

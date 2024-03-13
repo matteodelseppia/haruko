@@ -1,6 +1,7 @@
 package haruko.compiler
 
 import CompilerExceptions.{AlreadyDefinedLocalVariable, AlreadyDefinedMethod, UnboundVariable}
+import haruko.compiler
 import haruko.lang.Core
 
 import java.util.logging.Logger
@@ -73,6 +74,9 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
   }
 
   override def visitSymbol(e: SymExpression, env: Environment): Unit = {
+    if (e.symbol.lexeme == Lexeme.SKIP)
+      return 
+      
     val sym = e.symbol.value.asInstanceOf[String]
     local_variables.get(sym) match {
       case Some(x) => ASMWriter.loadLocal(x)
@@ -164,5 +168,10 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
     }).foreach(_._1.accept(this, env))
 
     local_variables = old_locals
+  }
+
+  override def visitCompose(e: ComposeExpression, env: Environment): Unit = {
+    e.first.accept(this, env)
+    e.functionCalls.foreach(_.accept(this, env))
   }
 }

@@ -1,5 +1,7 @@
 package haruko.compiler
 
+import haruko.compiler.ParserExceptions.MissingArguments
+
 
 object ParserExceptions {
   case class MissingSymbolException(msg: String, info: Token) extends Exception(msg)
@@ -24,6 +26,7 @@ class Parser(val tokens: Iterator[Token]) {
       Lexeme.LET -> parse_let,
       Lexeme.DO -> parse_do,
       Lexeme.IDENT -> parse_call,
+      Lexeme.COMPOSE -> parse_compose,
       Lexeme.RIGHT_PARENT -> skip_form)
 
   nextToken()
@@ -72,7 +75,7 @@ class Parser(val tokens: Iterator[Token]) {
            Lexeme.FALSE |
            Lexeme.NIL => new ConstExpression(current_token)
 
-      case Lexeme.IDENT => new SymExpression(current_token)
+      case Lexeme.IDENT | Lexeme.SKIP => new SymExpression(current_token)
     }
   }
 
@@ -165,5 +168,25 @@ class Parser(val tokens: Iterator[Token]) {
       throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `do` expression, found: ", current_token)
 
     new DoExpression(expressions)
+  }
+
+  private def parse_compose(): ComposeExpression = {
+    nextToken()
+    val first = parse_expression()
+    var functionCalls: List[FnCallExpression] = List.empty
+    nextToken()
+    while (current_lexeme != Lexeme.RIGHT_PARENT) {
+      val expr = parse_expression()
+      if (!expr.isInstanceOf[FnCallExpression])
+        throw MissingArguments("Missing function call", current_token)
+
+      functionCalls = functionCalls :+ expr.asInstanceOf[FnCallExpression]
+      nextToken()
+    }
+
+    if (!matchLexeme(Lexeme.RIGHT_PARENT))
+      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `->` expression, found: ", current_token)
+    
+    new ComposeExpression(first, functionCalls)
   }
 }

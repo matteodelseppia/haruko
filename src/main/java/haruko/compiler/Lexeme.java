@@ -36,5 +36,7 @@ public enum Lexeme {
   PRLN,
   NIL,
   DEFN,
+  COMPOSE,
+  SKIP,
   EOF;
 }

@@ -9,4 +9,5 @@ public interface Visitor {
     void visitDo(DoExpression e, Environment env);
     void visitConst(ConstExpression e, Environment env);
     void visitSymbol(SymExpression e, Environment env);
+    void visitCompose(ComposeExpression e, Environment env);
 }
