@@ -30,12 +30,14 @@ public class Main {
             }
         } else {
             String source = new String(Files.readAllBytes(Paths.get(args[0])));
+            String className = args[0].split("\\.")[0];
+            System.out.println("compiling and running file " + args[0] + " with classname=" + className);
             Lexer lex = new Lexer(source);
             Parser parser = new Parser(lex.getTokens().iterator());
-            Compiler compiler = new Compiler("Test", parser.getProgramBody());
+            Compiler compiler = new Compiler(className, parser.getProgramBody());
             byte[] code = compiler.getCode();
             HarukoClassLoader loader = new HarukoClassLoader();
-            Method main = loader.defineClass("Test", code).getMethod("main", String[].class);
+            Method main = loader.defineClass(className, code).getMethod("main", String[].class);
             main.invoke(null, (Object) args);
         }
     }
