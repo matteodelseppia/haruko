@@ -38,7 +38,7 @@
 
 (defn say-hello
   ()
-  (prln "Hello!"))
+  (prln "Welcome to haruko-lang!"))
 
 
 (defn return-1
@@ -74,6 +74,45 @@
             (let w 6)
             (pow z w)))))
 
+
+(defn return-123-list
+  ()
+  (list$ 1 2 3 4 5 6))
+
+(defn return-1357-list
+  ()
+  (list$ 1 3 5 7 9 11))
+
+(defn merge
+  (lst1 lst2 result)
+  (do
+    (if (empty lst1)
+        (app result lst2)
+        (if (empty lst2)
+            (app result lst1)
+            (do
+               (let head1 (head lst1))
+               (let head2 (head lst2))
+               (if (lt head1 head2)
+                   (merge (tail lst1) lst2 (app result head1))
+                   (merge lst1 (tail lst2) (app result head2))))))))
+
+(defn middle
+  (lst)
+  (-> lst (len) (div 2)))
+
+(defn merge-sort
+  (lst)
+  (if (or (empty lst) (eq 1 (len lst)))
+      lst
+      (do
+        (let half-index (middle lst))
+        (let left (slice lst 0 half-index))
+        (let right (slice lst half-index (len lst)))
+        (let res-left (merge-sort left))
+        (let res-right (merge-sort right))
+        (merge res-left res-right (list$)))))
+
 (say-hello)
 
 (prln (cat "GCD of 147, 105: " (gcd 147 105)))
@@ -91,3 +130,9 @@
 (test-compose)
 
 (prln$ "should print 15625:" (-> (test-nested)))
+
+
+(def lst (list$ 43 1 34 3 23 4 24 5))
+
+(prln$ "List before merge sort: " lst)
+(prln$ "List after merge sort: " (merge-sort lst))

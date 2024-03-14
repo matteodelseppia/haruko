@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b5760ed6-299d-428c-8586-14101964f89a" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/haruko/lang/Core.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests.ha" beforeDir="false" afterPath="$PROJECT_DIR$/tests.ha" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +85,35 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
+    <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="bbPath" value="" />
+      <setting name="parameters" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <setting name="workingDir" value="" />
+      <setting name="focusEditor" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+      <option name="configVersion" value="1" />
+      <option name="options" />
+      <option name="profiles" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
+      <setting name="displayName" value="" />
+      <setting name="host" value="" />
+      <setting name="port" value="0" />
+      <setting name="replType" value="SOCKET" />
+      <setting name="configType" value="SPECIFY" />
+      <setting name="replPortFileType" value="STANDARD" />
+      <setting name="customPortFile" value="" />
+      <setting name="fixLineNumbers" value="false" />
+      <setting name="focusEditor" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="Hello" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="haruko.Hello" />
       <module name="haruko" />
@@ -153,35 +183,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="Babashka" factoryName="BabashkaLocalRepl" activateToolWindowBeforeRun="false">
-      <setting name="displayName" value="" />
-      <setting name="bbPath" value="" />
-      <setting name="parameters" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <setting name="workingDir" value="" />
-      <setting name="focusEditor" value="false" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
-      <option name="configVersion" value="1" />
-      <option name="options" />
-      <option name="profiles" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="ClojureREPL" factoryName="Remote" activateToolWindowBeforeRun="false">
-      <setting name="displayName" value="" />
-      <setting name="host" value="" />
-      <setting name="port" value="0" />
-      <setting name="replType" value="SOCKET" />
-      <setting name="configType" value="SPECIFY" />
-      <setting name="replPortFileType" value="STANDARD" />
-      <setting name="customPortFile" value="" />
-      <setting name="fixLineNumbers" value="false" />
-      <setting name="focusEditor" value="false" />
-      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Application.haruko.compiler.Test" />

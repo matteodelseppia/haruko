@@ -1,5 +1,9 @@
 package haruko.lang
 
+case class HList(value: List[Object]) extends Object {
+  override def toString: String = value.toString()
+}
+
 object Core {
   private def runtimeMathCheck(seq: Seq[Object]): Unit = {
     seq.foreach {
@@ -15,7 +19,7 @@ object Core {
           case '+' => (x.longValue() + y.longValue()).asInstanceOf[Object]
           case '-' => (x.longValue() - y.longValue()).asInstanceOf[Object]
           case '*' => (x.longValue() * y.longValue()).asInstanceOf[Object]
-          case '/' => (x.doubleValue() / y.doubleValue()).asInstanceOf[Object]
+          case '/' => (x.longValue() / y.longValue()).asInstanceOf[Object]
           case '<' => (x.longValue() < y.longValue()).asInstanceOf[Object]
           case '>' => (x.longValue() > y.longValue()).asInstanceOf[Object]
           case '^' => (x.longValue() <= y.longValue()).asInstanceOf[Object]
@@ -192,11 +196,11 @@ object Core {
     verifyIfBool(o)
     Boolean.box(!o.asInstanceOf[Boolean])
   }
-  
+
   def eq(a: Object, b: Object): Object = {
     Boolean.box(a.equals(b))
   }
-  
+
   def neq(a: Object, b: Object): Object = {
     Boolean.box(!a.equals(b))
   }
@@ -209,5 +213,59 @@ object Core {
         (x.asInstanceOf[Long] % y.asInstanceOf[Long]).asInstanceOf[Object]
       case _ => throw new IllegalArgumentException("Mod on non integers")
     }
+  }
+
+  def list$(objects: Array[Object]) : Object = {
+    HList(objects.toList)
+  }
+
+  def app(list: Object, o: Object) : Object = {
+    assert(list.isInstanceOf[HList], "Cannot append to non-list object")
+    o match {
+      case list1: HList => HList(list.asInstanceOf[HList].value.appendedAll(list1.value))
+      case _ => HList(list.asInstanceOf[HList].value.appended(o))
+    }
+  }
+
+  def head(list: Object) : Object = {
+    assert(list.isInstanceOf[HList], "Cannot find head of non-list object")
+    if (list.asInstanceOf[HList].value.isEmpty)
+      null
+    else
+      list.asInstanceOf[HList].value.head
+  }
+
+  def tail(list: Object): Object = {
+    assert(list.isInstanceOf[HList], "Cannot find tail of non-list object")
+    if (list.asInstanceOf[HList].value.isEmpty)
+      list
+    else
+      HList(list.asInstanceOf[HList].value.tail)
+  }
+
+  def len(o: Object) : Object = {
+    assert(o.isInstanceOf[HList] || o.isInstanceOf[String])
+    if (o.isInstanceOf[String])
+      Long.box(o.toString.length).asInstanceOf[Object]
+    else
+      Long.box(o.asInstanceOf[HList].value.length).asInstanceOf[Object]
+  }
+
+  def get(o: Object, i: Object): Object = {
+    assert(o.isInstanceOf[HList])
+    assert(i.asInstanceOf[Long] < o.asInstanceOf[HList].value.length)
+    o.asInstanceOf[HList].value(i.asInstanceOf[Long].intValue())
+  }
+
+  def empty(o: Object) : Object = {
+    assert(o.isInstanceOf[HList])
+    Boolean.box(o.asInstanceOf[HList].value.isEmpty)
+  }
+
+  def slice(lst: Object, i1: Object, i2: Object) : Object = {
+    assert(lst.isInstanceOf[HList])
+    assert(lst.asInstanceOf[HList].value.nonEmpty)
+    assert(i1.isInstanceOf[Long] && i2.isInstanceOf[Long])
+    HList(lst.asInstanceOf[HList].value.slice(i1.asInstanceOf[Long].intValue(), i2.asInstanceOf[Long].intValue()))
   }
 }
