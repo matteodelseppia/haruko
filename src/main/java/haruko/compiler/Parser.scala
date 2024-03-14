@@ -1,55 +1,39 @@
 package haruko.compiler
 
-import haruko.compiler.ParserExceptions.MissingArguments
 
-
-object ParserExceptions {
-  case class MissingSymbolException(msg: String, info: Token) extends Exception(msg)
-  case class MissingRightParent(msg: String, info: Token) extends Exception(msg)
-  case class MissingDefaultInCond(msg: String, info: Token) extends Exception(msg)
-  case class MissingEOF(msg: String, info: Token) extends Exception(msg)
-  case class MissingArguments(msg: String, info: Token) extends Exception(msg)
-  case class MissingFnName(msg: String, info: Token) extends Exception(msg)
-}
+case class MissingSymbolException(msg: String) extends Exception(msg)
+case class MissingRightParent(msg: String) extends Exception(msg)
+case class MissingArguments(msg: String) extends Exception(msg)
+case class MissingFnName(msg: String) extends Exception(msg)
 
 
 class Parser(val tokens: Iterator[Token]) {
-  private var current_token: Token = null
-  private var current_lexeme: Lexeme = null
-  private var program_body: List[Expression] = List.empty
+  private var currentToken: Token = null
+  private var currentLexeme: Lexeme = null
+  private var programBody: List[Expression] = List.empty
 
-  private val lexeme_function_map: Map[Lexeme, () => Expression] =
+  private val lexemeToFunction: Map[Lexeme, () => Expression] =
     Map(
-      Lexeme.DEF -> parse_def,
-      Lexeme.DEFN -> parse_defn,
-      Lexeme.IF -> parse_if,
-      Lexeme.LET -> parse_let,
-      Lexeme.DO -> parse_do,
-      Lexeme.IDENT -> parse_call,
-      Lexeme.COMPOSE -> parse_compose,
-      Lexeme.RIGHT_PARENT -> skip_form)
-
-  nextToken()
-  while (!matchLexeme(Lexeme.EOF)) {
-    program_body = program_body :+ parse_expression()
-    nextToken()
-  }
+      Lexeme.DEF -> parseDef,
+      Lexeme.DEFN -> parseDefn,
+      Lexeme.IF -> parseIf,
+      Lexeme.LET -> parseLet,
+      Lexeme.DO -> parseDo,
+      Lexeme.IDENT -> parseCall,
+      Lexeme.COMPOSE -> parseCompose,
+      Lexeme.RIGHT_PARENT -> skipForm)
 
   def getProgramBody: List[Expression] = {
-    program_body
-  }
-
-  def getTest: () => Expression = {
-    parse_if
+    programBody
   }
 
   private def nextToken(): Unit = {
-    current_token = tokens.next()
-    current_lexeme = current_token.lexeme
+    currentToken = tokens.next()
+    currentLexeme = currentToken.lexeme
   }
 
   private def matchLexeme(lex: Lexeme): Boolean = {
-    current_lexeme.equals(lex)
+    currentLexeme.equals(lex)
   }
 
   private def consume(lex: Lexeme, e: Exception): Unit = {
@@ -57,15 +41,15 @@ class Parser(val tokens: Iterator[Token]) {
     nextToken()
   }
 
-  private def skip_form() : Expression = {
+  private def skipForm(): Expression = {
     new DoExpression(List.empty)
   }
 
-  private def parse_expression(): Expression = {
-    current_lexeme match {
+  private def parseExpression(): Expression = {
+    currentLexeme match {
       case Lexeme.LEFT_PARENT =>
         nextToken()
-        val parse_method = lexeme_function_map(current_lexeme)
+        val parse_method = lexemeToFunction(currentLexeme)
         parse_method()
 
       case Lexeme.CONST_D |
@@ -73,120 +57,132 @@ class Parser(val tokens: Iterator[Token]) {
            Lexeme.CONST_S |
            Lexeme.TRUE |
            Lexeme.FALSE |
-           Lexeme.NIL => new ConstExpression(current_token)
+           Lexeme.NIL => new ConstExpression(currentToken)
 
-      case Lexeme.IDENT | Lexeme.SKIP => new SymExpression(current_token)
+      case Lexeme.IDENT | Lexeme.SKIP => new SymExpression(currentToken)
     }
   }
 
-  private def parse_def(): DefExpression = {
+  private def parseDef(): DefExpression = {
     nextToken()
-    val identifier = current_token
+    val identifier = currentToken
     consume(
       Lexeme.IDENT,
-      ParserExceptions.MissingSymbolException("Expected identifier after `def`, found: ", identifier))
-    val assigned = parse_expression()
+      MissingSymbolException("Expected identifier after `def`, found: " + identifier))
+    val assigned = parseExpression()
     nextToken()
     val def_expr = new DefExpression(identifier, assigned)
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `def` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `def` expression, found: " + currentToken)
     def_expr
   }
 
-  private def parse_if(): IfExpression = {
+  private def parseIf(): IfExpression = {
     nextToken()
-    val branchingExpr = parse_expression()
+    val branchingExpr = parseExpression()
     nextToken()
-    val ifTrue = parse_expression()
+    val ifTrue = parseExpression()
     nextToken()
-    val ifFalse = parse_expression()
+    val ifFalse = parseExpression()
     nextToken()
     val ifExpr = new IfExpression(branchingExpr, ifTrue, ifFalse)
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `if` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `if` expression, found: " + currentToken)
     ifExpr
   }
 
-  private def parse_call() : FnCallExpression = {
-    val function = current_token
+  private def parseCall(): FnCallExpression = {
+    val function = currentToken
     nextToken()
     var args: List[Expression] = List.empty
-    while (current_lexeme != Lexeme.RIGHT_PARENT) {
-      args = args :+ parse_expression()
+    while (currentLexeme != Lexeme.RIGHT_PARENT) {
+      args = args :+ parseExpression()
       nextToken()
     }
 
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `cond` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `cond` expression, found: " + currentToken)
     new FnCallExpression(function, args)
   }
 
-  private def parse_defn(): DefnExpression = {
+  private def parseDefn(): DefnExpression = {
     nextToken()
-    val function = current_token
-    consume(Lexeme.IDENT, ParserExceptions.MissingFnName("Missing function name after `def`, found: ", current_token))
-    consume(Lexeme.LEFT_PARENT, ParserExceptions.MissingArguments("Missing list of arguments at `defn`, found: ", current_token))
+    val function = currentToken
+    consume(Lexeme.IDENT, MissingFnName("Missing function name after `def`, found: " + currentToken))
+    consume(Lexeme.LEFT_PARENT, MissingArguments("Missing list of arguments at `defn`, found: " + currentToken))
     var args: List[String] = List.empty
-    while (current_lexeme != Lexeme.RIGHT_PARENT) {
+    while (currentLexeme != Lexeme.RIGHT_PARENT) {
       if (!matchLexeme(Lexeme.IDENT))
-        throw new IllegalArgumentException("Unknown token in list of function arguments")
-      args = args :+ current_token.value.asInstanceOf[String]
+        throw new IllegalArgumentException("Unknown token in list of function arguments: " + currentToken)
+      args = args :+ currentToken.value.asInstanceOf[String]
       nextToken()
     }
     nextToken()
-    val body = parse_expression()
+    val body = parseExpression()
     nextToken()
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `defn` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `defn` expression, found: " + currentToken)
     new DefnExpression(function, args, body)
   }
 
 
-  private def parse_let(): LetExpression = {
+  private def parseLet(): LetExpression = {
     nextToken()
-    val identifier = current_token
+    val identifier = currentToken
     consume(
       Lexeme.IDENT,
-      ParserExceptions.MissingSymbolException("Expected identifier after `let`, found: ", identifier))
-    val assigned = parse_expression()
+      MissingSymbolException("Expected identifier after `let`, found: " + identifier))
+    val assigned = parseExpression()
     nextToken()
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `let` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `let` expression, found: " + currentToken)
 
     new LetExpression(identifier, assigned)
   }
 
-  private def parse_do(): DoExpression = {
+  private def parseDo(): DoExpression = {
     nextToken()
     var expressions: List[Expression] = List.empty
-    while (current_lexeme != Lexeme.RIGHT_PARENT) {
-      expressions = expressions :+ parse_expression()
+    while (currentLexeme != Lexeme.RIGHT_PARENT) {
+      expressions = expressions :+ parseExpression()
       nextToken()
     }
 
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `do` expression, found: ", current_token)
+      throw MissingRightParent("Missing parenthesis at the end of `do` expression, found: " + currentToken)
 
     new DoExpression(expressions)
   }
 
-  private def parse_compose(): ComposeExpression = {
+  private def parseCompose(): ComposeExpression = {
     nextToken()
-    val first = parse_expression()
+    val first = parseExpression()
     var functionCalls: List[FnCallExpression] = List.empty
     nextToken()
-    while (current_lexeme != Lexeme.RIGHT_PARENT) {
-      val expr = parse_expression()
+    while (currentLexeme != Lexeme.RIGHT_PARENT) {
+      val expr = parseExpression()
       if (!expr.isInstanceOf[FnCallExpression])
-        throw MissingArguments("Missing function call", current_token)
+        throw MissingArguments("Missing function call" + currentToken)
 
       functionCalls = functionCalls :+ expr.asInstanceOf[FnCallExpression]
       nextToken()
     }
 
     if (!matchLexeme(Lexeme.RIGHT_PARENT))
-      throw ParserExceptions.MissingRightParent("Missing parenthesis at the end of `->` expression, found: ", current_token)
-    
+      throw MissingRightParent("Missing parenthesis at the end of `->` expression, found: " + currentToken)
+
     new ComposeExpression(first, functionCalls)
+  }
+
+
+
+  /* ******************************************************************************
+   ********************************* PARSER LOGIC *********************************
+   ****************************************************************************** */
+
+  nextToken()
+  while (!matchLexeme(Lexeme.EOF)) {
+    programBody = programBody :+ parseExpression()
+    nextToken()
   }
 }

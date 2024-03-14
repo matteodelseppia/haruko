@@ -1,6 +1,6 @@
 package haruko.compiler
 
-import CompilerExceptions.{AlreadyDefinedLocalVariable, AlreadyDefinedMethod, UnboundVariable}
+import CompilerExceptions.{AlreadyDefinedLocalVariable, AlreadyDefinedMethod, UnboundVariable, WrongArityException}
 import haruko.compiler
 import haruko.lang.Core
 
@@ -21,19 +21,16 @@ object CompilerExceptions {
 }
 
 class Compiler(val name: String, val program: List[Expression]) extends Visitor {
-  private val logger = Logger.getLogger("IR Code")
-  private val logLevel = Level.ALL
   private val ASMWriter = new ASMWriter(name, this)
   private val global_variables: mutable.HashSet[String] = mutable.HashSet.empty
   private var local_variables: immutable.HashMap[String, Int] = immutable.HashMap.empty
-
   private val methods: mutable.HashMap[String, Int] = mutable.HashMap.empty
+  private var inCompose = false
   ASMWriter.initClass(name)
   program
     .filter(_.isInstanceOf[DefExpression])
     .asInstanceOf[List[DefExpression]]
     .foreach(e => {
-      logger.log(logLevel, "FOUND DEF OF " + e.variableName.value)
       global_variables.addOne(e.variableName.value.asInstanceOf[String])
     })
 
@@ -41,14 +38,18 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
     ASMWriter.addField(s)
   })
 
+  Core.getClass.getMethods.foreach(m => {
+    if (!m.getName.startsWith("$anon"))
+      methods.addOne(m.getName, m.getParameterCount)
+  })
+
   program
     .filter(_.isInstanceOf[DefnExpression])
     .asInstanceOf[List[DefnExpression]]
     .foreach(e => {
-      logger.log(logLevel, "FOUND DEFN OF " + e.functionName.value)
       val functionName = e.functionName.value.asInstanceOf[String]
       if (methods.contains(functionName))
-        throw AlreadyDefinedMethod("method already defined: " + functionName)
+        throw AlreadyDefinedMethod("method already defined in Core library: " + functionName)
       methods.addOne(functionName, e.arguments.size)
       ASMWriter.beginMethod(functionName, e.arguments.size)
       e.accept(this, new Environment(e.arguments.size))
@@ -59,7 +60,6 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
   //then initialize methods
   //absent for the moment
 
-  logger.log(logLevel, "CODE START")
   ASMWriter.initMain()
   program.filter(!_.isInstanceOf[DefnExpression]).foreach(_.accept(this, new Environment(1)))
   ASMWriter.endClass()
@@ -69,14 +69,10 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
   }
 
   override def visitConst(e: ConstExpression, env: Environment): Unit = {
-    logger.log(logLevel, "PUSH " + e.constant.value)
     ASMWriter.pushConst(e.constant.value)
   }
 
   override def visitSymbol(e: SymExpression, env: Environment): Unit = {
-    if (e.symbol.lexeme == Lexeme.SKIP)
-      return 
-      
     val sym = e.symbol.value.asInstanceOf[String]
     local_variables.get(sym) match {
       case Some(x) => ASMWriter.loadLocal(x)
@@ -91,7 +87,6 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
   override def visitDef(e: DefExpression, env: Environment): Unit = {
     e.assignedValue.accept(this, env)
     ASMWriter.putStatic(e.variableName.value.asInstanceOf[String])
-    logger.log(logLevel, "PUTSTATIC " + e.variableName.value)
   }
 
   override def visitIf(e: IfExpression, env: Environment): Unit = {
@@ -121,18 +116,20 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
       case None =>
         if (!methods.contains(functionName))
           throw CompilerExceptions.UnknownFunction("Call to unknown function: " + functionName)
-        else if (num_args != methods(functionName)) {
+        else if (num_args != methods(functionName) && !inCompose) {
             throw CompilerExceptions.WrongArityException("Call to unknown function: " + functionName)
         } else {
-          ASMWriter.callLocalMethod(functionName, num_args)
+          if (inCompose)
+            ASMWriter.callLocalMethod(functionName, num_args + 1)
+          else
+            ASMWriter.callLocalMethod(functionName, num_args)
           return
         }
       case Some(x) =>
     }
 
-    logger.log(logLevel, "CALL " + method.get)
     method.get.getParameterCount match {
-      case x if x == num_args => ASMWriter.callMethod(method.get, variadic)
+      case x if x == num_args || inCompose => ASMWriter.callMethod(method.get, variadic)
       case _ => throw CompilerExceptions.WrongArityException("Wrong arity when calling function: " + functionName)
     }
   }
@@ -161,17 +158,30 @@ class Compiler(val name: String, val program: List[Expression]) extends Visitor 
 
   override def visitDo(e: DoExpression, env: Environment): Unit = {
     val old_locals = local_variables
-    e.expressions.zipWithIndex.filter({
+
+    e.expressions.zipWithIndex.foreach({
       case (ex, i) if ((ex.isInstanceOf[ConstExpression] || ex.isInstanceOf[SymExpression])
-        && i + 1 != e.expressions.size) => false
-      case _ => true
-    }).foreach(_._1.accept(this, env))
+        && i + 1 != e.expressions.size) =>
+      case (ex, i) if (ex.isInstanceOf[FnCallExpression]) => {
+        ex.accept(this, env)
+        if (i + 1 != e.expressions.size)
+          ASMWriter.pop()
+      }
+      case (ex, i) => ex.accept(this, env)
+    })
 
     local_variables = old_locals
   }
 
+
   override def visitCompose(e: ComposeExpression, env: Environment): Unit = {
     e.first.accept(this, env)
-    e.functionCalls.foreach(_.accept(this, env))
+    inCompose = true
+    e.functionCalls.foreach(f => {
+      if (f.arguments.size != methods(f.functionName.value.toString) - 1)
+        throw WrongArityException("Wrong arity when calling function: " + f.functionName)
+      f.accept(this, env)
+    })
+    inCompose = false
   }
 }

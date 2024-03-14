@@ -1,9 +1,5 @@
 package haruko.lang
 
-import org.graalvm.collections.Pair
-
-import scala.annotation.tailrec
-
 object Core {
   private def runtimeMathCheck(seq: Seq[Object]): Unit = {
     seq.foreach {
@@ -24,6 +20,7 @@ object Core {
           case '>' => (x.longValue() > y.longValue()).asInstanceOf[Object]
           case '^' => (x.longValue() <= y.longValue()).asInstanceOf[Object]
           case '?' => (x.longValue() >= y.longValue()).asInstanceOf[Object]
+          case 'p' => Math.pow(x.doubleValue(), y.doubleValue()).longValue().asInstanceOf[Object]
         }
       case (x, y, _) if x.isInstanceOf[Double] || y.isInstanceOf[Double] =>
         op match {
@@ -35,6 +32,7 @@ object Core {
           case '>' => (x.doubleValue() > y.doubleValue()).asInstanceOf[Object]
           case '^' => (x.doubleValue() <= y.doubleValue()).asInstanceOf[Object]
           case '?' => (x.doubleValue() >= y.doubleValue()).asInstanceOf[Object]
+          case 'p' => Math.pow(x.doubleValue(), y.doubleValue()).asInstanceOf[Object]
         }
       case _ => throw new IllegalArgumentException("Unsupported number type")
     }
@@ -45,12 +43,16 @@ object Core {
       throw new IllegalArgumentException("Expected boolean, found: " + o.toString)
   }
 
-  def prln(o: Object) : Unit = {
+  def prln(o: Object) : Object = {
     println(o)
+    null
   }
 
-  def prln$(objects: Array[Object]): Unit = {
-    objects.foreach(prln)
+  def prln$(objects: Array[Object]): Object = {
+    objects.foreach(o => pr(o + " "))
+    print("\n")
+    System.out.flush()
+    null
   }
 
   def cat(a: Object, b: Object): Object = {
@@ -61,18 +63,19 @@ object Core {
     objects.reduce((a, b) => a.toString + b)
   }
 
-  def pr(o: Object) : Unit = {
+  def pr(o: Object) : Object = {
     print(o)
     System.out.flush()
+    null
   }
 
-  def pr$(objects: Array[Object]) : Unit = {
+  def pr$(objects: Array[Object]) : Object = {
     objects.foreach(pr)
     System.out.flush()
+    null
   }
 
   def add$(objects: Array[Object]) : Object = {
-
     var result: Number = 0L.asInstanceOf[Number]
     objects.foreach(x => {
       result = binaryMathOp(result, x.asInstanceOf[Number], '+').asInstanceOf[Number]
@@ -91,6 +94,10 @@ object Core {
 
   def dec(a: Object) : Object = {
     sub(a, Long.box(1))
+  }
+
+  def pow(a: Object, b: Object) : Object = {
+    binaryMathOp(a.asInstanceOf[Number], b.asInstanceOf[Number], 'p')
   }
 
   def mul$(objects: Array[Object]): Object = {

@@ -1,4 +1,4 @@
-package haruko;
+package haruko.runtime;
 
 public class Runtime {
     public static byte unboxBoolean(Boolean a) {

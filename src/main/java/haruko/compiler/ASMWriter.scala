@@ -1,6 +1,5 @@
 package haruko.compiler
 
-import org.objectweb.asm
 import org.objectweb.asm.{ClassWriter, FieldVisitor, Label, MethodVisitor, Opcodes}
 
 import java.lang.reflect.Method
@@ -24,7 +23,6 @@ object Descriptors {
   val TYPE_DOUBLE: String = "D"
   val TYPE_LONG: String = "J"
   val TYPE_BOOLEAN: String = "Z"
-  val TYPE_INT: String = "I"
 }
 
 object Methods {
@@ -35,12 +33,12 @@ object Methods {
 }
 
 class ASMWriter(val className: String, val compiler: Compiler) {
-  private val cw: ClassWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS)
+  private val cw: ClassWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES)
   private var mw: MethodVisitor = _
   private var fw: FieldVisitor = _
 
   def initClass(name: String) : Unit = {
-    cw.visit(Opcodes.V1_5, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
+    cw.visit(Opcodes.V1_8, Access.PUBLIC_FINAL, name, null, Descriptors.OBJECT, null)
   }
 
   def addField(name: String): Unit = {
@@ -65,30 +63,17 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitVarInsn(Opcodes.ALOAD, index)
   }
 
-  def push(obj: Object) : Unit = {
-    mw.visitLdcInsn(obj)
-  }
-
-  def pop() : Unit = {
-    mw.visitInsn(Opcodes.POP)
-  }
-
   def initArray(size: Int): Unit = {
     mw.visitIntInsn(Opcodes.BIPUSH, size)
     mw.visitTypeInsn(Opcodes.ANEWARRAY, Descriptors.OBJECT)
   }
 
   def callMethod(method: Method, variadic: Boolean): Unit = {
-    var signature = {
+    val signature = {
       if (variadic)
-        "([" + Descriptors.L_OBJECT + ")"
+        "([" + Descriptors.L_OBJECT + ")" + Descriptors.L_OBJECT
       else
-        "(" + Descriptors.L_OBJECT*method.getParameterCount + ")"
-    }
-    
-    method.getName match {
-      case "prln" | "pr" | "pr$" | "prln$" => signature += "V"
-      case _ => signature += Descriptors.L_OBJECT
+        "(" + Descriptors.L_OBJECT * method.getParameterCount + ")" + Descriptors.L_OBJECT
     }
 
     mw.visitMethodInsn(Opcodes.INVOKESTATIC, "haruko/lang/Core", method.getName, signature, false)
@@ -107,6 +92,10 @@ class ASMWriter(val className: String, val compiler: Compiler) {
       null, 
       null)
   }
+
+  def pop() : Unit = {
+    mw.visitInsn(Opcodes.POP)
+  }
   
   def endMethod() : Unit = {
     mw.visitInsn(Opcodes.ARETURN)
@@ -118,7 +107,7 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitTypeInsn(Opcodes.CHECKCAST, Descriptors.BOOLEAN)
     mw.visitMethodInsn(
       Opcodes.INVOKESTATIC,
-      "haruko/Runtime",
+      "haruko/runtime/Runtime",
       "unboxBoolean",
       "(" + Descriptors.L_BOOLEAN + ")" + "B",
       false)
@@ -132,11 +121,6 @@ class ASMWriter(val className: String, val compiler: Compiler) {
     mw.visitLabel(skipFalse)
     ifTrue.accept(compiler, env)
     mw.visitLabel(skipTrue)
-  }
-
-  def unboxBoolean(a: Boolean) : Int = {
-    if (a) 1
-    else 0
   }
 
   def pushConst(obj: Object) : Unit = {

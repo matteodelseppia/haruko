@@ -36,6 +36,46 @@
       (add (power n 2) (sum-of-squares (sub n 1)))))
 
 
+(defn say-hello
+  ()
+  (prln "Hello!"))
+
+
+(defn return-1
+  ()
+  1)
+
+(defn test-compose
+  ()
+  (-> (return-1)
+      (inc)
+      (dec)
+      (power 3)
+      (inc)
+      (pow 0)
+      (add 5)
+      (sum-of-squares)
+      (cat " = 91")
+      (prln)))
+
+
+(defn test-nested
+  ()
+  (do
+     (let x 2)
+     (let y 3)
+     (if (gt x y)
+         (do
+            (let z 4)
+            (let w 5)
+            (add z w))
+         (do
+            (let z 5)
+            (let w 6)
+            (pow z w)))))
+
+(say-hello)
+
 (prln (cat "GCD of 147, 105: " (gcd 147 105)))
 
 (prln (cat "10th Fibonacci: " (fib 10)))
@@ -47,3 +87,7 @@
 (prln (cat "Sum of squares up to 5: " (sum-of-squares 5)))
 
 (prln (cat "PI^3: " (power 3.1415926535 3)))
+
+(test-compose)
+
+(prln$ "should print 15625:" (-> (test-nested)))

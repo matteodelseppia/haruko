@@ -293,7 +293,6 @@ class Lexer(val source: String) {
     currentChar match {
       case c if c.isWhitespace => nextChar()
       case c if c.isDigit => NumberReader.read()
-      case '^' => WordReader.read()
       case '\"' => StringReader.read()
 
       case '+' =>
