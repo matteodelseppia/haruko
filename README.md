@@ -1,6 +1,6 @@
 # Haruko Language
 
-Haruko is a toy programming language designed for educational purposes. It features simple syntax and functional programming constructs. This repository contains the Haruko compiler and a set of example programs.
+Haruko is a toy programming language I've implemented to learn more about the JVM and Java Bytecode. It features a Clojure-inspired syntax and compiles byetecode for the JVM. This repository contains the Haruko compiler and one example program containing functions like `pow` or `merge-sort`.
 
 ## Requirements
 
